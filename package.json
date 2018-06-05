@@ -6,5 +6,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js"
+  },
+  "dependencies": {
+    "puppeteer": "^1.4.0"
   }
 }
