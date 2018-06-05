@@ -1,0 +1,10 @@
+{
+  "name": "poppins",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "tomoya <tomoya.ton@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  }
+}
