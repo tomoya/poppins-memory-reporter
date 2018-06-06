@@ -1,24 +1,28 @@
-const puppeteer = require("puppeteer");
+import puppeteer from "puppeteer";
+import LOGIN_URL from "./constants/url";
+import {
+  USER_ID,
+  PASSWORD,
+  LOGIN_BUTTON,
+  PREVIOUS_DAY_BUTTON,
+  MKIL_TIME_1,
+  MKIL_TIME_2,
+  SUMMARY
+} from "./constants/selector";
 
 (async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto("https://ps.poppins.co.jp/nursery/login/index?redirect=%2Fnursery%2Fmypage%2FpoppinsMemory");
-  await page.type("#userId", process.env.USER_ID);
-  await page.type("#password", process.env.PASSWORD);
-  await page.click("button[type=submit]");
+  await page.goto(LOGIN_URL);
+  await page.type(USER_ID, process.env.USER_ID);
+  await page.type(PASSWORD, process.env.PASSWORD);
+  await page.click(LOGIN_BUTTON);
   await page.waitForNavigation();
-  await page.click("#previousDay");
+  await page.click(PREVIOUS_DAY_BUTTON);
   await page.waitForNavigation();
-  const milkTime1 = await page.evaluate(
-    () => document.querySelector("#off > tbody > tr:nth-child(5) > td:nth-child(2) > textarea").value
-  );
-  const milkTime2 = await page.evaluate(
-    () => document.querySelector("#off > tbody > tr:nth-child(6) > td:nth-child(2) > textarea").value
-  );
-  const summary = await page.evaluate(
-    () => document.querySelector("#off > tbody > tr:nth-child(10) > td:nth-child(2) > textarea").value
-  );
+  const milkTime1 = await page.evaluate(selector => document.querySelector(selector).value, MKIL_TIME_1);
+  const milkTime2 = await page.evaluate(selector => document.querySelector(selector).value, MKIL_TIME_2);
+  const summary = await page.evaluate(selector => document.querySelector(selector).value, SUMMARY);
   console.log(milkTime1);
   console.log(milkTime2);
   console.log(summary);
