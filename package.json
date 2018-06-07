@@ -10,7 +10,7 @@
     "remove-dist": "rimraf ./dist",
     "prebuild": "npm run clean-dist",
     "build": "babel src -d dist",
-    "lint": "eslint ./"
+    "lint": "eslint ./src"
   },
   "dependencies": {
     "@slack/client": "^4.3.0",
