@@ -15,7 +15,7 @@
 ## 環境変数について
 
 | 環境変数名 | 説明 | 必要条件 |
-| -- | -- | -- | -- |
+| -- | -- | -- |
 | USER_ID | ログインID | 必須 |
 | PASSWORD | ログインパスワード | 必須 |
 | SLACK_WEBHOOK_URL | Slack の Webhook URL | 必須 |
