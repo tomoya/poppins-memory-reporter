@@ -29,8 +29,10 @@ import POPPINS_BLUE_COLOR from "./constants/color";
   await page.type(PASSWORD_INPUT, process.env.PASSWORD);
   await page.click(LOGIN_BUTTON);
   await page.waitForNavigation();
-  await page.click(PREVIOUS_DAY_BUTTON);
-  await page.waitForNavigation();
+  if (!process.env.REPORT_TODAY) {
+    await page.click(PREVIOUS_DAY_BUTTON);
+    await page.waitForNavigation();
+  }
   const getValue = selector => document.querySelector(selector).value;
   const lunchTime = await page.evaluate(getValue, LUNCH_TIME_TEXTAREA);
   const snackTime = await page.evaluate(getValue, SNACK_TIME_TEXTAREA);
@@ -44,42 +46,46 @@ import POPPINS_BLUE_COLOR from "./constants/color";
   const sleepEndHour2 = await page.evaluate(getValue, SLEEP_END_HOUR_2_INPUT);
   const sleepEndMinute2 = await page.evaluate(getValue, SLEEP_END_MINUTE_2_INPUT);
   const looing = await page.evaluate(getValue, LOOKING_TEXTAREA);
-  const IncomingWebhookSendArguments = {
-    attachments: [
-      {
-        fallback: "poppins memory summary post",
-        color: POPPINS_BLUE_COLOR,
-        title: "Today's Poppins Memory",
-        fields: [
-          {
-            title: "昼食",
-            value: lunchTime,
-            short: true
-          },
-          {
-            title: "午後・おやつ",
-            value: snackTime,
-            short: true
-          },
-          {
-            title: "排泄",
-            value: poo,
-            short: true
-          },
-          {
-            title: "睡眠",
-            value: `${sleepStartHour1}:${sleepStartMinute1}〜${sleepEndHour1}:${sleepEndMinute1}\n${sleepStartHour2}:${sleepStartMinute2}〜${sleepEndHour2}:${sleepEndMinute2}`,
-            short: true
-          },
-          {
-            title: "今日の様子",
-            value: looing,
-            short: false
-          }
-        ]
-      }
-    ]
-  };
-  await webhook.send(IncomingWebhookSendArguments);
+  if (looing === "") {
+    await webhook.send("レポートはありません");
+  } else {
+    const IncomingWebhookSendArguments = {
+      attachments: [
+        {
+          fallback: "poppins memory summary post",
+          color: POPPINS_BLUE_COLOR,
+          title: "Today's Poppins Memory",
+          fields: [
+            {
+              title: "昼食",
+              value: lunchTime,
+              short: true
+            },
+            {
+              title: "午後・おやつ",
+              value: snackTime,
+              short: true
+            },
+            {
+              title: "排泄",
+              value: poo,
+              short: true
+            },
+            {
+              title: "睡眠",
+              value: `${sleepStartHour1}:${sleepStartMinute1}〜${sleepEndHour1}:${sleepEndMinute1}\n${sleepStartHour2}:${sleepStartMinute2}〜${sleepEndHour2}:${sleepEndMinute2}`,
+              short: true
+            },
+            {
+              title: "今日の様子",
+              value: looing,
+              short: false
+            }
+          ]
+        }
+      ]
+    };
+    await webhook.send(IncomingWebhookSendArguments);
+  }
   await browser.close();
 })();
