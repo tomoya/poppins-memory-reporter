@@ -6,6 +6,9 @@
   "license": "MIT",
   "scripts": {
     "start": "babel-node ./src/index.js",
+    "clean-dist": "npm run remove-dist && mkdir dist",
+    "remove-dist": "rimraf ./dist",
+    "prebuild": "npm run clean-dist",
     "build": "babel src -d dist",
     "lint": "eslint ./"
   },
