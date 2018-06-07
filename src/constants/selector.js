@@ -2,8 +2,8 @@ export const USER_ID_INPUT = "#userId";
 export const PASSWORD_INPUT = "#password";
 export const LOGIN_BUTTON = "button[type=submit]";
 export const PREVIOUS_DAY_BUTTON = "#previousDay";
-export const MKIL_TIME_1_TEXTAREA = "#off > tbody > tr:nth-child(5) > td:nth-child(2) > textarea";
-export const MKIL_TIME_2_TEXTAREA = "#off > tbody > tr:nth-child(6) > td:nth-child(2) > textarea";
+export const LUNCH_TIME_TEXTAREA = "#off > tbody > tr:nth-child(5) > td:nth-child(2) > textarea";
+export const SNACK_TIME_TEXTAREA = "#off > tbody > tr:nth-child(6) > td:nth-child(2) > textarea";
 export const POO_TEXTAREA = "#off > tbody > tr:nth-child(8) > td:nth-child(2) > textarea";
 export const SLEEP_START_HOUR_1_INPUT =
   '#off > tbody > tr:nth-child(9) > td:nth-child(2) > div:nth-child(1) > div:nth-child(1) > ul > li:nth-child(1) > input[type="hidden"]';
@@ -21,4 +21,4 @@ export const SLEEP_END_HOUR_2_INPUT =
   '#off > tbody > tr:nth-child(9) > td:nth-child(2) > div:nth-child(4) > div:nth-child(3) > ul > li:nth-child(1) > input[type="hidden"]';
 export const SLEEP_END_MINUTE_2_INPUT =
   '#off > tbody > tr:nth-child(9) > td:nth-child(2) > div:nth-child(4) > div:nth-child(3) > ul > li:nth-child(3) > input[type="hidden"]';
-export const SUMMARY_TEXTAREA = "#off > tbody > tr:nth-child(10) > td:nth-child(2) > textarea";
+export const LOOKING_TEXTAREA = "#off > tbody > tr:nth-child(10) > td:nth-child(2) > textarea";

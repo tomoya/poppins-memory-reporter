@@ -6,8 +6,8 @@ import {
   PASSWORD_INPUT,
   LOGIN_BUTTON,
   PREVIOUS_DAY_BUTTON,
-  MKIL_TIME_1_TEXTAREA,
-  MKIL_TIME_2_TEXTAREA,
+  LUNCH_TIME_TEXTAREA,
+  SNACK_TIME_TEXTAREA,
   POO_TEXTAREA,
   SLEEP_START_HOUR_1_INPUT,
   SLEEP_START_MINUTE_1_INPUT,
@@ -17,7 +17,7 @@ import {
   SLEEP_START_MINUTE_2_INPUT,
   SLEEP_END_HOUR_2_INPUT,
   SLEEP_END_MINUTE_2_INPUT,
-  SUMMARY_TEXTAREA
+  LOOKING_TEXTAREA
 } from "./constants/selector";
 
 (async () => {
@@ -31,8 +31,8 @@ import {
   await page.click(PREVIOUS_DAY_BUTTON);
   await page.waitForNavigation();
   const getValue = selector => document.querySelector(selector).value;
-  const milkTime1 = await page.evaluate(getValue, MKIL_TIME_1_TEXTAREA);
-  const milkTime2 = await page.evaluate(getValue, MKIL_TIME_2_TEXTAREA);
+  const lunchTime = await page.evaluate(getValue, LUNCH_TIME_TEXTAREA);
+  const snackTime = await page.evaluate(getValue, SNACK_TIME_TEXTAREA);
   const poo = await page.evaluate(getValue, POO_TEXTAREA);
   const sleepStartHour1 = await page.evaluate(getValue, SLEEP_START_HOUR_1_INPUT);
   const sleepStartMinute1 = await page.evaluate(getValue, SLEEP_START_MINUTE_1_INPUT);
@@ -42,7 +42,7 @@ import {
   const sleepStartMinute2 = await page.evaluate(getValue, SLEEP_START_MINUTE_2_INPUT);
   const sleepEndHour2 = await page.evaluate(getValue, SLEEP_END_HOUR_2_INPUT);
   const sleepEndMinute2 = await page.evaluate(getValue, SLEEP_END_MINUTE_2_INPUT);
-  const summary = await page.evaluate(getValue, SUMMARY_TEXTAREA);
+  const looing = await page.evaluate(getValue, LOOKING_TEXTAREA);
   const IncomingWebhookSendArguments = {
     attachments: [
       {
@@ -52,12 +52,12 @@ import {
         fields: [
           {
             title: "昼食",
-            value: milkTime1,
+            value: lunchTime,
             short: true
           },
           {
             title: "午後・おやつ",
-            value: milkTime2,
+            value: snackTime,
             short: true
           },
           {
@@ -72,7 +72,7 @@ import {
           },
           {
             title: "今日の様子",
-            value: summary,
+            value: looing,
             short: false
           }
         ]
