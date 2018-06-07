@@ -6,6 +6,7 @@ import {
   PASSWORD_INPUT,
   LOGIN_BUTTON,
   PREVIOUS_DAY_BUTTON,
+  REPORT_DATE,
   LUNCH_TIME_TEXTAREA,
   SNACK_TIME_TEXTAREA,
   POO_TEXTAREA,
@@ -34,6 +35,8 @@ import POPPINS_BLUE_COLOR from "./constants/color";
     await page.waitForNavigation();
   }
   const getValue = selector => document.querySelector(selector).value;
+  const getInnerText = selector => document.querySelector(selector).innerText;
+  const reportDate = await page.evaluate(getInnerText, REPORT_DATE);
   const lunchTime = await page.evaluate(getValue, LUNCH_TIME_TEXTAREA);
   const snackTime = await page.evaluate(getValue, SNACK_TIME_TEXTAREA);
   const poo = await page.evaluate(getValue, POO_TEXTAREA);
@@ -47,14 +50,14 @@ import POPPINS_BLUE_COLOR from "./constants/color";
   const sleepEndMinute2 = await page.evaluate(getValue, SLEEP_END_MINUTE_2_INPUT);
   const looing = await page.evaluate(getValue, LOOKING_TEXTAREA);
   if (looing === "") {
-    await webhook.send("レポートはありません");
+    await webhook.send(`${reportDate}のレポートはありません`);
   } else {
     const IncomingWebhookSendArguments = {
       attachments: [
         {
           fallback: "poppins memory summary post",
           color: POPPINS_BLUE_COLOR,
-          title: "Today's Poppins Memory",
+          title: `${reportDate}のポピンズメモリー`,
           fields: [
             {
               title: "昼食",

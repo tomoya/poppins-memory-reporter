@@ -2,6 +2,7 @@ export const USER_ID_INPUT = "#userId";
 export const PASSWORD_INPUT = "#password";
 export const LOGIN_BUTTON = "button[type=submit]";
 export const PREVIOUS_DAY_BUTTON = "#previousDay";
+export const REPORT_DATE = "#submit-form > div:nth-child(5) > div > div > div.col-xs-12.col-xs-8 > h3";
 export const LUNCH_TIME_TEXTAREA = "#off > tbody > tr:nth-child(5) > td:nth-child(2) > textarea";
 export const SNACK_TIME_TEXTAREA = "#off > tbody > tr:nth-child(6) > td:nth-child(2) > textarea";
 export const POO_TEXTAREA = "#off > tbody > tr:nth-child(8) > td:nth-child(2) > textarea";
