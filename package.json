@@ -1,5 +1,5 @@
 {
-  "name": "poppins",
+  "name": "poppins-memory-reporter",
   "version": "1.0.0",
   "main": "./dist/index.js",
   "author": "tomoya <tomoya.ton@gmail.com>",
