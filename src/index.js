@@ -19,6 +19,7 @@ import {
   SLEEP_END_MINUTE_2_INPUT,
   LOOKING_TEXTAREA
 } from "./constants/selector";
+import POPPINS_BLUE_COLOR from "./constants/color";
 
 (async () => {
   const browser = await puppeteer.launch();
@@ -47,7 +48,7 @@ import {
     attachments: [
       {
         fallback: "poppins memory summary post",
-        color: "#36a64f",
+        color: POPPINS_BLUE_COLOR,
         title: "Today's Poppins Memory",
         fields: [
           {
