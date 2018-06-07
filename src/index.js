@@ -20,9 +20,10 @@ import {
   await page.waitForNavigation();
   await page.click(PREVIOUS_DAY_BUTTON);
   await page.waitForNavigation();
-  const milkTime1 = await page.evaluate(selector => document.querySelector(selector).value, MKIL_TIME_1);
-  const milkTime2 = await page.evaluate(selector => document.querySelector(selector).value, MKIL_TIME_2);
-  const summary = await page.evaluate(selector => document.querySelector(selector).value, SUMMARY);
+  const getTextareaValue = selector => document.querySelector(selector).value;
+  const milkTime1 = await page.evaluate(getTextareaValue, MKIL_TIME_1);
+  const milkTime2 = await page.evaluate(getTextareaValue, MKIL_TIME_2);
+  const summary = await page.evaluate(getTextareaValue, SUMMARY);
   console.log(milkTime1);
   console.log(milkTime2);
   console.log(summary);
