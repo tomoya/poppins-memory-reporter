@@ -1,5 +1,6 @@
 {
   "name": "poppins-memory-reporter",
+  "description": "A Poppins Nursery School Notification Tool",
   "version": "1.0.0",
   "main": "./dist/index.js",
   "author": "tomoya <tomoya.ton@gmail.com>",
