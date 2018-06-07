@@ -8,6 +8,7 @@ import {
   PREVIOUS_DAY_BUTTON,
   MKIL_TIME_1_TEXTAREA,
   MKIL_TIME_2_TEXTAREA,
+  POO_TEXTAREA,
   SUMMARY_TEXTAREA
 } from "./constants/selector";
 
@@ -24,6 +25,7 @@ import {
   const getTextareaValue = selector => document.querySelector(selector).value;
   const milkTime1 = await page.evaluate(getTextareaValue, MKIL_TIME_1_TEXTAREA);
   const milkTime2 = await page.evaluate(getTextareaValue, MKIL_TIME_2_TEXTAREA);
+  const poo = await page.evaluate(getTextareaValue, POO_TEXTAREA);
   const summary = await page.evaluate(getTextareaValue, SUMMARY_TEXTAREA);
   const IncomingWebhookSendArguments = {
     attachments: [
@@ -40,6 +42,11 @@ import {
           {
             title: "午後・おやつ",
             value: milkTime2,
+            short: true
+          },
+          {
+            title: "排泄",
+            value: poo,
             short: true
           },
           {
