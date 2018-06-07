@@ -1,12 +1,12 @@
 {
   "name": "poppins",
   "version": "1.0.0",
-  "main": "./src/index.js",
+  "main": "./dist/index.js",
   "author": "tomoya <tomoya.ton@gmail.com>",
   "license": "MIT",
   "scripts": {
     "start": "babel-node ./src/index.js",
-    "build": "babel src -d lib",
+    "build": "babel src -d dist",
     "lint": "eslint ./"
   },
   "dependencies": {
