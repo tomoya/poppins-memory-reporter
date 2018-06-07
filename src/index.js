@@ -9,6 +9,14 @@ import {
   MKIL_TIME_1_TEXTAREA,
   MKIL_TIME_2_TEXTAREA,
   POO_TEXTAREA,
+  SLEEP_START_HOUR_1_INPUT,
+  SLEEP_START_MINUTE_1_INPUT,
+  SLEEP_END_HOUR_1_INPUT,
+  SLEEP_END_MINUTE_1_INPUT,
+  SLEEP_START_HOUR_2_INPUT,
+  SLEEP_START_MINUTE_2_INPUT,
+  SLEEP_END_HOUR_2_INPUT,
+  SLEEP_END_MINUTE_2_INPUT,
   SUMMARY_TEXTAREA
 } from "./constants/selector";
 
@@ -22,11 +30,19 @@ import {
   await page.waitForNavigation();
   await page.click(PREVIOUS_DAY_BUTTON);
   await page.waitForNavigation();
-  const getTextareaValue = selector => document.querySelector(selector).value;
-  const milkTime1 = await page.evaluate(getTextareaValue, MKIL_TIME_1_TEXTAREA);
-  const milkTime2 = await page.evaluate(getTextareaValue, MKIL_TIME_2_TEXTAREA);
-  const poo = await page.evaluate(getTextareaValue, POO_TEXTAREA);
-  const summary = await page.evaluate(getTextareaValue, SUMMARY_TEXTAREA);
+  const getValue = selector => document.querySelector(selector).value;
+  const milkTime1 = await page.evaluate(getValue, MKIL_TIME_1_TEXTAREA);
+  const milkTime2 = await page.evaluate(getValue, MKIL_TIME_2_TEXTAREA);
+  const poo = await page.evaluate(getValue, POO_TEXTAREA);
+  const sleepStartHour1 = await page.evaluate(getValue, SLEEP_START_HOUR_1_INPUT);
+  const sleepStartMinute1 = await page.evaluate(getValue, SLEEP_START_MINUTE_1_INPUT);
+  const sleepEndHour1 = await page.evaluate(getValue, SLEEP_END_HOUR_1_INPUT);
+  const sleepEndMinute1 = await page.evaluate(getValue, SLEEP_END_MINUTE_1_INPUT);
+  const sleepStartHour2 = await page.evaluate(getValue, SLEEP_START_HOUR_2_INPUT);
+  const sleepStartMinute2 = await page.evaluate(getValue, SLEEP_START_MINUTE_2_INPUT);
+  const sleepEndHour2 = await page.evaluate(getValue, SLEEP_END_HOUR_2_INPUT);
+  const sleepEndMinute2 = await page.evaluate(getValue, SLEEP_END_MINUTE_2_INPUT);
+  const summary = await page.evaluate(getValue, SUMMARY_TEXTAREA);
   const IncomingWebhookSendArguments = {
     attachments: [
       {
@@ -47,6 +63,11 @@ import {
           {
             title: "排泄",
             value: poo,
+            short: true
+          },
+          {
+            title: "睡眠",
+            value: `${sleepStartHour1}:${sleepStartMinute1}〜${sleepEndHour1}:${sleepEndMinute1}\n${sleepStartHour2}:${sleepStartMinute2}〜${sleepEndHour2}:${sleepEndMinute2}`,
             short: true
           },
           {
