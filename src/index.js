@@ -22,7 +22,10 @@ import {
 } from "./constants/selector";
 
 (async () => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    // https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#chrome-headless-fails-due-to-sandbox-issues
+    args: ["--no-sandbox", "--disable-setuid-sandbox"]
+  });
   // Don't stop process if Don't close browser
   try {
     const page = await browser.newPage();
