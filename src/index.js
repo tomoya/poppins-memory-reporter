@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import webhook from "./utils/slack";
+import { webhook, generateReport } from "./utils/slack";
 import LOGIN_URL from "./constants/url";
 import {
   USER_ID_INPUT,
@@ -20,7 +20,6 @@ import {
   SLEEP_END_MINUTE_2_INPUT,
   LOOKING_TEXTAREA
 } from "./constants/selector";
-import POPPINS_BLUE_COLOR from "./constants/color";
 
 (async () => {
   const browser = await puppeteer.launch();
@@ -54,43 +53,15 @@ import POPPINS_BLUE_COLOR from "./constants/color";
     if (looing === "") {
       await webhook.send(`${reportDate}のレポートはありません`);
     } else {
-      const IncomingWebhookSendArguments = {
-        attachments: [
-          {
-            fallback: "poppins memory summary post",
-            color: POPPINS_BLUE_COLOR,
-            title: `${reportDate}のポピンズメモリー`,
-            fields: [
-              {
-                title: "昼食",
-                value: lunchTime,
-                short: true
-              },
-              {
-                title: "午後・おやつ",
-                value: snackTime,
-                short: true
-              },
-              {
-                title: "排泄",
-                value: poo,
-                short: true
-              },
-              {
-                title: "睡眠",
-                value: `${sleepStartHour1}:${sleepStartMinute1}〜${sleepEndHour1}:${sleepEndMinute1}\n${sleepStartHour2}:${sleepStartMinute2}〜${sleepEndHour2}:${sleepEndMinute2}`,
-                short: true
-              },
-              {
-                title: "今日の様子",
-                value: looing,
-                short: false
-              }
-            ]
-          }
-        ]
-      };
-      await webhook.send(IncomingWebhookSendArguments);
+      const report = generateReport({
+        reportDate,
+        lunchTime,
+        snackTime,
+        poo,
+        sleepTime: `${sleepStartHour1}:${sleepStartMinute1}〜${sleepEndHour1}:${sleepEndMinute1}\n${sleepStartHour2}:${sleepStartMinute2}〜${sleepEndHour2}:${sleepEndMinute2}`,
+        looing
+      });
+      await webhook.send(report);
     }
   } catch (e) {
     webhook.send(`次のエラーが発生しました\n${e}`);
