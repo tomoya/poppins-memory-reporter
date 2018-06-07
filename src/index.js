@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import webhook from "./utils/slack";
 import LOGIN_URL from "./constants/url";
 import {
   USER_ID_INPUT,
@@ -24,8 +25,32 @@ import {
   const milkTime1 = await page.evaluate(getTextareaValue, MKIL_TIME_1_TEXTAREA);
   const milkTime2 = await page.evaluate(getTextareaValue, MKIL_TIME_2_TEXTAREA);
   const summary = await page.evaluate(getTextareaValue, SUMMARY_TEXTAREA);
-  console.log(milkTime1);
-  console.log(milkTime2);
-  console.log(summary);
+  const IncomingWebhookSendArguments = {
+    attachments: [
+      {
+        fallback: "poppins memory summary post",
+        color: "#36a64f",
+        title: "Today's Poppins Memory",
+        fields: [
+          {
+            title: "昼食",
+            value: milkTime1,
+            short: true
+          },
+          {
+            title: "午後・おやつ",
+            value: milkTime2,
+            short: true
+          },
+          {
+            title: "今日の様子",
+            value: summary,
+            short: false
+          }
+        ]
+      }
+    ]
+  };
+  await webhook.send(IncomingWebhookSendArguments);
   await browser.close();
 })();
