@@ -1,5 +1,7 @@
 # ポピンズメモリーレポーター
 
+[![CircleCI](https://circleci.com/gh/tomoya/poppins-memory-reporter/tree/master.svg?style=svg)](https://circleci.com/gh/tomoya/poppins-memory-reporter/tree/master)
+
 ## これは何?
 
 ポピンズナーサリースクールの会員マイページ https://ps.poppins.co.jp/nursery/login/index にある連絡ページ「ポピンズメモリー」の情報を取得してSlackに通知を行うツールです。
