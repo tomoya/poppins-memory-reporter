@@ -10,7 +10,7 @@ export const webhook = new IncomingWebhook(url, defaults);
 
 export default webhook;
 
-export const generateReport = ({ reportDate, lunchTime, snackTime, poo, sleepTime, looing }) => ({
+export const generateReport = ({ reportDate, lunchTime, snackTime, poo, sleepTime, looking }) => ({
   attachments: [
     {
       fallback: "poppins memory summary post",
@@ -39,7 +39,7 @@ export const generateReport = ({ reportDate, lunchTime, snackTime, poo, sleepTim
         },
         {
           title: "今日の様子",
-          value: looing,
+          value: looking,
           short: false
         }
       ]

@@ -52,8 +52,8 @@ import {
     const sleepStartMinute2 = await page.evaluate(getValue, SLEEP_START_MINUTE_2_INPUT);
     const sleepEndHour2 = await page.evaluate(getValue, SLEEP_END_HOUR_2_INPUT);
     const sleepEndMinute2 = await page.evaluate(getValue, SLEEP_END_MINUTE_2_INPUT);
-    const looing = await page.evaluate(getValue, LOOKING_TEXTAREA);
-    if (looing === "") {
+    const looking = await page.evaluate(getValue, LOOKING_TEXTAREA);
+    if (looking === "") {
       await webhook.send(`${reportDate}のレポートはありません`);
     } else {
       const report = generateReport({
@@ -62,7 +62,7 @@ import {
         snackTime,
         poo,
         sleepTime: `${sleepStartHour1}:${sleepStartMinute1}〜${sleepEndHour1}:${sleepEndMinute1}\n${sleepStartHour2}:${sleepStartMinute2}〜${sleepEndHour2}:${sleepEndMinute2}`,
-        looing
+        looking
       });
       await webhook.send(report);
     }
