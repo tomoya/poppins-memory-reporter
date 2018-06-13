@@ -1,3 +1,4 @@
+/* eslint no-console: 0 */
 import puppeteer from "puppeteer";
 import { webhook, generateReport } from "./utils/slack";
 import LOGIN_URL from "./constants/url";
@@ -57,23 +58,33 @@ const isReportToday = process.env.REPORT_TODAY !== undefined;
     const sleepEndHour2 = await page.evaluate(getValue, SLEEP_END_HOUR_2_INPUT);
     const sleepEndMinute2 = await page.evaluate(getValue, SLEEP_END_MINUTE_2_INPUT);
     const looking = await page.evaluate(getValue, LOOKING_TEXTAREA);
+    const report = {
+      reportDate,
+      lunchTime,
+      snackTime,
+      poo,
+      sleepTime: `${sleepStartHour1}:${sleepStartMinute1}〜${sleepEndHour1}:${sleepEndMinute1}\n${sleepStartHour2}:${sleepStartMinute2}〜${sleepEndHour2}:${sleepEndMinute2}`,
+      looking,
+    };
     if (looking === "") {
-      await webhook.send(`${reportDate}のレポートはありません`);
+      const message = `${reportDate}のレポートはありません`;
+      await webhook.send(message);
+      console.log({ message, report: null });
     } else {
-      const report = generateReport({
-        reportDate,
-        lunchTime,
-        snackTime,
-        poo,
-        sleepTime: `${sleepStartHour1}:${sleepStartMinute1}〜${sleepEndHour1}:${sleepEndMinute1}\n${sleepStartHour2}:${sleepStartMinute2}〜${sleepEndHour2}:${sleepEndMinute2}`,
-        looking,
-      });
-      await webhook.send(report);
+      await webhook.send(generateReport(report));
+      const message = "レポートを正常に取得しました";
+      console.log({ message, report });
     }
   } catch (e) {
-    webhook.send(`次のエラーが発生しました\n${e}`);
+    const message = "次のエラーが発生しました";
+    const error = `${e}`;
+    webhook.send(`${message}: \`${error}\``);
+    console.error({ message, error });
   }
   await browser.close();
 })().catch(e => {
-  webhook.send(`次のエラーが発生しました\n${e}`);
+  const message = "次のエラーが発生しました";
+  const error = `${e}`;
+  webhook.send(`${message}: \`${error}\``);
+  console.error({ message, error });
 });
