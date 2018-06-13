@@ -1,4 +1,3 @@
-/* eslint no-console: 0 */
 import puppeteer from "puppeteer";
 import { postReport } from "./utils/slack";
 import LOGIN_URL from "./constants/url";
@@ -26,7 +25,7 @@ const { USER_ID, PASSWORD, REPORT_TODAY, DEBUG } = process.env;
 const isReportToday = REPORT_TODAY !== undefined;
 const report = { message: null, data: null, error: null };
 
-(async () => {
+export default async () => {
   const browser = await puppeteer.launch(
     DEBUG
       ? {
@@ -83,6 +82,6 @@ const report = { message: null, data: null, error: null };
     report.error = `${e}`;
   }
   await postReport(report);
-  console.log(report);
   await browser.close();
-})();
+  return report;
+};
