@@ -1,20 +1,17 @@
+defaults: &defaults
+  docker:
+    - image: circleci/node:latest-browsers
+  working_directory: ~/repo
+
 version: 2
 jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:latest-browsers
-
-    working_directory: ~/repo
-
+  test:
+    <<: *defaults
     steps:
       - checkout
-
-      # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
       - run: yarn install
@@ -24,7 +21,6 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run tests!
       - run:
           name: "JavaScript Linter"
           command: yarn lint --format junit -o reports/junit/js-lint-results.xml
@@ -32,13 +28,35 @@ jobs:
       - store_test_results:
           path: reports/junit
 
+  deploy_master:
+    <<: *defaults
+    steps:
+      - checkout
       - setup_remote_docker
+      - run:
+          name: "Build docker image"
+          command: |
+            docker build -t $DOCKER_USER/$CIRCLE_PROJECT_REPONAME .
 
       - deploy:
-          name: Build and push Docker image if branch is master
+          name: Push docker image
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              docker build -t $DOCKER_USER/$CIRCLE_PROJECT_REPONAME .
-              echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-              docker push $DOCKER_USER/$CIRCLE_PROJECT_REPONAME
-            fi
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            docker push $DOCKER_USER/$CIRCLE_PROJECT_REPONAME
+
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /.*/
+      - deploy_master:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
