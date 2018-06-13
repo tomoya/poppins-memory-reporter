@@ -9,9 +9,7 @@ if (SLACK_CHANNEL) defaults.channel = SLACK_CHANNEL;
 
 export const webhook = SLACK_WEBHOOK_URL ? new IncomingWebhook(SLACK_WEBHOOK_URL, defaults) : { send: () => undefined };
 
-export default webhook;
-
-export const generateAttachments = ({ reportDate, lunchTime, snackTime, poo, sleepTime, looking }) => ({
+const generateAttachments = ({ reportDate, lunchTime, snackTime, poo, sleepTime, looking }) => ({
   attachments: [
     {
       fallback: "poppins memory summary post",
@@ -47,3 +45,9 @@ export const generateAttachments = ({ reportDate, lunchTime, snackTime, poo, sle
     },
   ],
 });
+
+export const postReport = ({ message, data, error }) => {
+  if (error !== null) return webhook.send(`${message}: \`${error}\``);
+  if (data === null) return webhook.send(message);
+  return webhook.send(generateAttachments(data));
+};
