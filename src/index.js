@@ -65,7 +65,7 @@ const isReportToday = REPORT_TODAY !== undefined;
     const sleepEndHour2 = await page.evaluate(getValue, SLEEP_END_HOUR_2_INPUT);
     const sleepEndMinute2 = await page.evaluate(getValue, SLEEP_END_MINUTE_2_INPUT);
     const looking = await page.evaluate(getValue, LOOKING_TEXTAREA);
-    const report = {
+    const data = {
       reportDate,
       lunchTime,
       snackTime,
@@ -76,11 +76,11 @@ const isReportToday = REPORT_TODAY !== undefined;
     if (looking === "") {
       const message = `${reportDate}のレポートはありません`;
       await webhook.send(message);
-      console.log({ message, report: null });
+      console.log({ message, data: null });
     } else {
-      await webhook.send(generateAttachments(report));
+      await webhook.send(generateAttachments(data));
       const message = "レポートを正常に取得しました";
-      console.log({ message, report });
+      console.log({ message, data });
     }
   } catch (e) {
     const message = "次のエラーが発生しました";
