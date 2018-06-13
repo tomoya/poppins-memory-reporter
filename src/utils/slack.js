@@ -1,14 +1,13 @@
 import { IncomingWebhook } from "@slack/client";
 import POPPINS_BLUE_COLOR from "../constants/color";
 
-const url = process.env.SLACK_WEBHOOK_URL;
-const channel = process.env.SLACK_CHANNEL;
+const { SLACK_WEBHOOK_URL, SLACK_CHANNEL } = process.env;
 const defaults = {
   username: "Poppins Memory Reporter",
 };
-if (channel) defaults.channel = channel;
+if (SLACK_CHANNEL) defaults.channel = SLACK_CHANNEL;
 
-export const webhook = url ? new IncomingWebhook(url, defaults) : { send: () => undefined };
+export const webhook = SLACK_WEBHOOK_URL ? new IncomingWebhook(SLACK_WEBHOOK_URL, defaults) : { send: () => undefined };
 
 export default webhook;
 

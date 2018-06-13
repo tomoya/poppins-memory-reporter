@@ -22,9 +22,8 @@ import {
   LOOKING_TEXTAREA,
 } from "./constants/selector";
 
-const userId = process.env.USER_ID;
-const password = process.env.PASSWORD;
-const isReportToday = process.env.REPORT_TODAY !== undefined;
+const { USER_ID, PASSWORD, REPORT_TODAY } = process.env;
+const isReportToday = REPORT_TODAY !== undefined;
 
 (async () => {
   const browser = await puppeteer.launch({
@@ -35,8 +34,8 @@ const isReportToday = process.env.REPORT_TODAY !== undefined;
   try {
     const page = await browser.newPage();
     await page.goto(LOGIN_URL);
-    await page.type(USER_ID_INPUT, userId);
-    await page.type(PASSWORD_INPUT, password);
+    await page.type(USER_ID_INPUT, USER_ID);
+    await page.type(PASSWORD_INPUT, PASSWORD);
     await page.click(LOGIN_BUTTON);
     await page.waitForNavigation();
     if (!isReportToday) {
