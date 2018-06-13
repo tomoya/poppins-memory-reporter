@@ -38,6 +38,41 @@ $ cp .env.example .env
 # そして編集
 ```
 
+## 起動方法
+
+起動方法はローカル（Node）環境とDocker環境の2種類があります。
+
+また、Slack に通知するためには [Incoming Webhooks](https://my.slack.com/services/new/incoming-webhook) の Webhook URL を事前に取得して環境変数にセットしておく必要があります。
+
+### ローカル（Node）環境
+
+ローカル（Node）環境の起動方法は、基本的に一般的な Node アプリケーションと同じで、モジュールをインストールして実行するだけです。実行前に direnv を利用して環境変数を定義しておきましょう。
+
+```
+$ yarn install
+$ yarn start
+or
+$ npm install
+$ npm start
+```
+
+特に問題なければ、これで実行できます。
+
+### Docker 環境
+
+ローカルでビルドする場合は docker-compose を利用するのが簡単です。`.env` ファイルが必須なので、事前に準備さえしておけば、以下のコマンドだけで実行できます。
+
+```
+$ docker-compose up
+```
+
+もし、ソースコードが不要な場合は、Docker Hub からイメージを取得して実行することも可能です。その場合は、次のようにして実行します。
+
+```
+$ docker pull tomoyaton/poppins-memory-reporter
+$ docker run --env-file=.env tomoyaton/poppins-memory-reporter
+```
+
 ## ToDo
 
 - [ ] Google Spreadsheed に記録したい
