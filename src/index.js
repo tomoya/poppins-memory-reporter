@@ -21,6 +21,10 @@ import {
   LOOKING_TEXTAREA,
 } from "./constants/selector";
 
+const userId = process.env.USER_ID;
+const password = process.env.PASSWORD;
+const isReportToday = process.env.REPORT_TODAY !== undefined;
+
 (async () => {
   const browser = await puppeteer.launch({
     // https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#chrome-headless-fails-due-to-sandbox-issues
@@ -30,11 +34,11 @@ import {
   try {
     const page = await browser.newPage();
     await page.goto(LOGIN_URL);
-    await page.type(USER_ID_INPUT, process.env.USER_ID);
-    await page.type(PASSWORD_INPUT, process.env.PASSWORD);
+    await page.type(USER_ID_INPUT, userId);
+    await page.type(PASSWORD_INPUT, password);
     await page.click(LOGIN_BUTTON);
     await page.waitForNavigation();
-    if (!process.env.REPORT_TODAY) {
+    if (!isReportToday) {
       await page.click(PREVIOUS_DAY_BUTTON);
       await page.waitForNavigation();
     }
