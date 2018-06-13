@@ -18,13 +18,13 @@ import {
   SLEEP_START_MINUTE_2_INPUT,
   SLEEP_END_HOUR_2_INPUT,
   SLEEP_END_MINUTE_2_INPUT,
-  LOOKING_TEXTAREA
+  LOOKING_TEXTAREA,
 } from "./constants/selector";
 
 (async () => {
   const browser = await puppeteer.launch({
     // https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#chrome-headless-fails-due-to-sandbox-issues
-    args: ["--no-sandbox", "--disable-setuid-sandbox"]
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
   // Don't stop process if Don't close browser
   try {
@@ -62,7 +62,7 @@ import {
         snackTime,
         poo,
         sleepTime: `${sleepStartHour1}:${sleepStartMinute1}〜${sleepEndHour1}:${sleepEndMinute1}\n${sleepStartHour2}:${sleepStartMinute2}〜${sleepEndHour2}:${sleepEndMinute2}`,
-        looking
+        looking,
       });
       await webhook.send(report);
     }

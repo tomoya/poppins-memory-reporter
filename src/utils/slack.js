@@ -3,7 +3,7 @@ import POPPINS_BLUE_COLOR from "../constants/color";
 
 const url = process.env.SLACK_WEBHOOK_URL;
 const defaults = {
-  username: "Poppins Memory Reporter"
+  username: "Poppins Memory Reporter",
 };
 if (process.env.SLACK_CHANNEL) defaults.channel = process.env.SLACK_CHANNEL;
 export const webhook = new IncomingWebhook(url, defaults);
@@ -20,29 +20,29 @@ export const generateReport = ({ reportDate, lunchTime, snackTime, poo, sleepTim
         {
           title: "昼食",
           value: lunchTime,
-          short: true
+          short: true,
         },
         {
           title: "午後・おやつ",
           value: snackTime,
-          short: true
+          short: true,
         },
         {
           title: "排泄",
           value: poo,
-          short: true
+          short: true,
         },
         {
           title: "睡眠",
           value: sleepTime,
-          short: true
+          short: true,
         },
         {
           title: "今日の様子",
           value: looking,
-          short: false
-        }
-      ]
-    }
-  ]
+          short: false,
+        },
+      ],
+    },
+  ],
 });
