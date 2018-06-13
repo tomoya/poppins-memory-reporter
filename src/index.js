@@ -22,14 +22,22 @@ import {
   LOOKING_TEXTAREA,
 } from "./constants/selector";
 
-const { USER_ID, PASSWORD, REPORT_TODAY } = process.env;
+const { USER_ID, PASSWORD, REPORT_TODAY, DEBUG } = process.env;
+console.log(DEBUG);
 const isReportToday = REPORT_TODAY !== undefined;
 
 (async () => {
-  const browser = await puppeteer.launch({
-    // https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#chrome-headless-fails-due-to-sandbox-issues
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  });
+  const browser = await puppeteer.launch(
+    DEBUG
+      ? {
+          headless: false,
+          slowMo: 100,
+        }
+      : {
+          // https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#chrome-headless-fails-due-to-sandbox-issues
+          args: ["--no-sandbox", "--disable-setuid-sandbox"],
+        },
+  );
   // Don't stop process if Don't close browser
   try {
     const page = await browser.newPage();
