@@ -75,5 +75,5 @@ $ docker run --env-file=.env tomoyaton/poppins-memory-reporter
 
 ## ToDo
 
-- [ ] Google Spreadsheed に記録したい
-- [ ] 取得する情報を増やしたり、表示／非表示を調整できるようにする
+- Google Spreadsheed に記録したい
+- 取得する情報を増やしたり、表示／非表示を調整できるようにする
