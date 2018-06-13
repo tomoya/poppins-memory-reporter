@@ -8,7 +8,7 @@ const defaults = {
 };
 if (channel) defaults.channel = channel;
 
-export const webhook = new IncomingWebhook(url, defaults);
+export const webhook = url ? new IncomingWebhook(url, defaults) : { send: () => undefined };
 
 export default webhook;
 
