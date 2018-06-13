@@ -86,9 +86,4 @@ const report = { message: null, data: null, error: null };
   await postReport(report);
   console.log(report);
   await browser.close();
-})().catch(e => {
-  report.message = "次のエラーが発生しました";
-  report.error = `${e}`;
-  postReport(report);
-  console.log(report);
-});
+})();
