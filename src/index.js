@@ -23,7 +23,6 @@ import {
 } from "./constants/selector";
 
 const { USER_ID, PASSWORD, REPORT_TODAY, DEBUG } = process.env;
-console.log(DEBUG);
 const isReportToday = REPORT_TODAY !== undefined;
 const report = { message: null, data: null, error: null };
 
