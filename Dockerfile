@@ -15,4 +15,4 @@ COPY package.json .
 COPY yarn.lock .
 RUN yarn install
 COPY --from=builder /build/dist dist
-CMD ["node", "dist/index.js"]
+CMD ["/bin/sh", "-c", "node -e \"require('./dist/index.js').default().then((report) => console.log(report))\""]
