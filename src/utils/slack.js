@@ -12,7 +12,7 @@ export const webhook = url ? new IncomingWebhook(url, defaults) : { send: () => 
 
 export default webhook;
 
-export const generateReport = ({ reportDate, lunchTime, snackTime, poo, sleepTime, looking }) => ({
+export const generateAttachments = ({ reportDate, lunchTime, snackTime, poo, sleepTime, looking }) => ({
   attachments: [
     {
       fallback: "poppins memory summary post",

@@ -1,6 +1,6 @@
 /* eslint no-console: 0 */
 import puppeteer from "puppeteer";
-import { webhook, generateReport } from "./utils/slack";
+import { webhook, generateAttachments } from "./utils/slack";
 import LOGIN_URL from "./constants/url";
 import {
   USER_ID_INPUT,
@@ -71,7 +71,7 @@ const isReportToday = process.env.REPORT_TODAY !== undefined;
       await webhook.send(message);
       console.log({ message, report: null });
     } else {
-      await webhook.send(generateReport(report));
+      await webhook.send(generateAttachments(report));
       const message = "レポートを正常に取得しました";
       console.log({ message, report });
     }
