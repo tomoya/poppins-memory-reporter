@@ -22,7 +22,7 @@
 | -- | -- | -- |
 | USER_ID | ログインID | 必須 |
 | PASSWORD | ログインパスワード | 必須 |
-| SLACK_WEBHOOK_URL | Slack の Webhook URL | 必須 |
+| SLACK_WEBHOOK_URL | Webhook URL（設定しない場合は通知しない） | 任意 |
 | SLACK_CHANNEL | 通知チャンネル（設定しない場合はデフォルト） | 任意 |
 | REPORT_TODAY | 定義すると当日を通知する（デフォルトは前日） | 任意 |
 
