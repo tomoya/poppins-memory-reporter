@@ -25,6 +25,7 @@ import {
 const { USER_ID, PASSWORD, REPORT_TODAY, DEBUG } = process.env;
 console.log(DEBUG);
 const isReportToday = REPORT_TODAY !== undefined;
+const report = { message: null, data: null, error: null };
 
 (async () => {
   const browser = await puppeteer.launch(
@@ -74,24 +75,24 @@ const isReportToday = REPORT_TODAY !== undefined;
       looking,
     };
     if (looking === "") {
-      const message = `${reportDate}のレポートはありません`;
-      await webhook.send(message);
-      console.log({ message, data: null });
+      report.message = `${reportDate}のレポートはありません`;
+      await webhook.send(report.message);
+      console.log(report);
     } else {
       await webhook.send(generateAttachments(data));
-      const message = "レポートを正常に取得しました";
-      console.log({ message, data });
+      report.message = "レポートを正常に取得しました";
+      console.log(report);
     }
   } catch (e) {
-    const message = "次のエラーが発生しました";
-    const error = `${e}`;
-    webhook.send(`${message}: \`${error}\``);
-    console.error({ message, error });
+    report.message = "次のエラーが発生しました";
+    report.error = `${e}`;
+    webhook.send(`${report.message}: \`${report.error}\``);
+    console.error(report);
   }
   await browser.close();
 })().catch(e => {
-  const message = "次のエラーが発生しました";
-  const error = `${e}`;
-  webhook.send(`${message}: \`${error}\``);
-  console.error({ message, error });
+  report.message = "次のエラーが発生しました";
+  report.error = `${e}`;
+  webhook.send(`${report.message}: \`${report.error}\``);
+  console.error(report);
 });
