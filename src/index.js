@@ -9,7 +9,7 @@ import {
   REPORT_DATE,
   LUNCH_TIME_TEXTAREA,
   SNACK_TIME_TEXTAREA,
-  POO_TEXTAREA,
+  POO_TIME_TEXTAREA,
   SLEEP_START_HOUR_1_INPUT,
   SLEEP_START_MINUTE_1_INPUT,
   SLEEP_END_HOUR_1_INPUT,
@@ -54,7 +54,7 @@ export default async () => {
     const reportDate = await page.evaluate(getInnerText, REPORT_DATE);
     const lunchTime = await page.evaluate(getValue, LUNCH_TIME_TEXTAREA);
     const snackTime = await page.evaluate(getValue, SNACK_TIME_TEXTAREA);
-    const pooTime = await page.evaluate(getValue, POO_TEXTAREA);
+    const pooTime = await page.evaluate(getValue, POO_TIME_TEXTAREA);
     const sleepStartHour1 = await page.evaluate(getValue, SLEEP_START_HOUR_1_INPUT);
     const sleepStartMinute1 = await page.evaluate(getValue, SLEEP_START_MINUTE_1_INPUT);
     const sleepEndHour1 = await page.evaluate(getValue, SLEEP_END_HOUR_1_INPUT);
