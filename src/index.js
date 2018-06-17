@@ -43,27 +43,41 @@ export default async () => {
     await page.goto(LOGIN_URL);
     await page.type(USER_ID_INPUT, USER_ID);
     await page.type(PASSWORD_INPUT, PASSWORD);
-    await page.click(LOGIN_BUTTON);
-    await page.waitForNavigation();
+    await Promise.all([page.click(LOGIN_BUTTON), page.waitForNavigation()]);
     if (!isReportToday) {
-      await page.click(PREVIOUS_DAY_BUTTON);
-      await page.waitForNavigation();
+      await Promise.all([page.click(PREVIOUS_DAY_BUTTON), page.waitForNavigation()]);
     }
     const getValue = selector => document.querySelector(selector).value;
     const getInnerText = selector => document.querySelector(selector).innerText;
-    const reportDate = await page.evaluate(getInnerText, REPORT_DATE);
-    const lunchTime = await page.evaluate(getValue, LUNCH_TIME_TEXTAREA);
-    const snackTime = await page.evaluate(getValue, SNACK_TIME_TEXTAREA);
-    const pooTime = await page.evaluate(getValue, POO_TIME_TEXTAREA);
-    const sleepStartHour1 = await page.evaluate(getValue, SLEEP_START_HOUR_1_INPUT);
-    const sleepStartMinute1 = await page.evaluate(getValue, SLEEP_START_MINUTE_1_INPUT);
-    const sleepEndHour1 = await page.evaluate(getValue, SLEEP_END_HOUR_1_INPUT);
-    const sleepEndMinute1 = await page.evaluate(getValue, SLEEP_END_MINUTE_1_INPUT);
-    const sleepStartHour2 = await page.evaluate(getValue, SLEEP_START_HOUR_2_INPUT);
-    const sleepStartMinute2 = await page.evaluate(getValue, SLEEP_START_MINUTE_2_INPUT);
-    const sleepEndHour2 = await page.evaluate(getValue, SLEEP_END_HOUR_2_INPUT);
-    const sleepEndMinute2 = await page.evaluate(getValue, SLEEP_END_MINUTE_2_INPUT);
-    const looking = await page.evaluate(getValue, LOOKING_TEXTAREA);
+    const [
+      reportDate,
+      lunchTime,
+      snackTime,
+      pooTime,
+      sleepStartHour1,
+      sleepStartMinute1,
+      sleepEndHour1,
+      sleepEndMinute1,
+      sleepStartHour2,
+      sleepStartMinute2,
+      sleepEndHour2,
+      sleepEndMinute2,
+      looking,
+    ] = await Promise.all([
+      page.evaluate(getInnerText, REPORT_DATE),
+      page.evaluate(getValue, LUNCH_TIME_TEXTAREA),
+      page.evaluate(getValue, SNACK_TIME_TEXTAREA),
+      page.evaluate(getValue, POO_TIME_TEXTAREA),
+      page.evaluate(getValue, SLEEP_START_HOUR_1_INPUT),
+      page.evaluate(getValue, SLEEP_START_MINUTE_1_INPUT),
+      page.evaluate(getValue, SLEEP_END_HOUR_1_INPUT),
+      page.evaluate(getValue, SLEEP_END_MINUTE_1_INPUT),
+      page.evaluate(getValue, SLEEP_START_HOUR_2_INPUT),
+      page.evaluate(getValue, SLEEP_START_MINUTE_2_INPUT),
+      page.evaluate(getValue, SLEEP_END_HOUR_2_INPUT),
+      page.evaluate(getValue, SLEEP_END_MINUTE_2_INPUT),
+      page.evaluate(getValue, LOOKING_TEXTAREA),
+    ]);
     if (looking === "") {
       report.message = `${reportDate}のレポートはありません`;
     } else {
