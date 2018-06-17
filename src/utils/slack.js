@@ -9,13 +9,17 @@ if (SLACK_CHANNEL) defaults.channel = SLACK_CHANNEL;
 
 export const webhook = SLACK_WEBHOOK_URL ? new IncomingWebhook(SLACK_WEBHOOK_URL, defaults) : { send: () => undefined };
 
-const generateAttachments = ({ reportDate, lunchTime, snackTime, pooTime, sleepTime, looking }) => ({
+const generateAttachments = ({ reportDate, temperature, lunchTime, snackTime, pooTime, sleepTime, looking }) => ({
   attachments: [
     {
       fallback: "poppins memory summary post",
       color: POPPINS_BLUE_COLOR,
       title: `${reportDate}のポピンズメモリー`,
       fields: [
+        {
+          title: "体温",
+          value: temperature,
+        },
         {
           title: "昼食",
           value: lunchTime,

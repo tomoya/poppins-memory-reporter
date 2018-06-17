@@ -7,6 +7,12 @@ import {
   LOGIN_BUTTON,
   PREVIOUS_DAY_BUTTON,
   REPORT_DATE,
+  TEMP_DETECTION_HOUR_1_INPUT,
+  TEMP_DETECTION_MINUTE_1_INPUT,
+  TEMPERATURE_1_INPUT,
+  TEMP_DETECTION_HOUR_2_INPUT,
+  TEMP_DETECTION_MINUTE_2_INPUT,
+  TEMPERATURE_2_INPUT,
   LUNCH_TIME_TEXTAREA,
   SNACK_TIME_TEXTAREA,
   POO_TIME_TEXTAREA,
@@ -51,6 +57,12 @@ export default async () => {
     const getInnerText = selector => document.querySelector(selector).innerText;
     const [
       reportDate,
+      tempDetectionHour1,
+      tempDetectionMinute1,
+      temperature1,
+      tempDetectionHour2,
+      tempDetectionMinute2,
+      temperature2,
       lunchTime,
       snackTime,
       pooTime,
@@ -65,6 +77,12 @@ export default async () => {
       looking,
     ] = await Promise.all([
       page.evaluate(getInnerText, REPORT_DATE),
+      page.evaluate(getValue, TEMP_DETECTION_HOUR_1_INPUT),
+      page.evaluate(getValue, TEMP_DETECTION_MINUTE_1_INPUT),
+      page.evaluate(getValue, TEMPERATURE_1_INPUT),
+      page.evaluate(getValue, TEMP_DETECTION_HOUR_2_INPUT),
+      page.evaluate(getValue, TEMP_DETECTION_MINUTE_2_INPUT),
+      page.evaluate(getValue, TEMPERATURE_2_INPUT),
       page.evaluate(getValue, LUNCH_TIME_TEXTAREA),
       page.evaluate(getValue, SNACK_TIME_TEXTAREA),
       page.evaluate(getValue, POO_TIME_TEXTAREA),
@@ -84,6 +102,7 @@ export default async () => {
       report.message = "レポートを正常に取得しました";
       report.data = {
         reportDate,
+        temperature: `${tempDetectionHour1}:${tempDetectionMinute1} ${temperature1}°C\n${tempDetectionHour2}:${tempDetectionMinute2} ${temperature2}°C`,
         lunchTime,
         snackTime,
         pooTime,
