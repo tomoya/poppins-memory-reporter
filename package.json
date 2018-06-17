@@ -15,7 +15,7 @@
     "lint": "eslint ./src"
   },
   "dependencies": {
-    "@slack/client": "^4.3.0",
+    "@slack/client": "^4.3.1",
     "puppeteer": "^1.5.0"
   },
   "devDependencies": {
