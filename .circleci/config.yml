@@ -21,9 +21,16 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/repo
+
   test:
     <<: *defaults
     steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
@@ -39,7 +46,8 @@ jobs:
   deploy_master:
     <<: *defaults
     steps:
-      - checkout
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - setup_remote_docker
       - run:
           name: "Build docker image"
@@ -55,7 +63,8 @@ jobs:
   deploy_tag:
     <<: *defaults
     steps:
-      - checkout
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - setup_remote_docker
       - run:
           name: "Build docker image"
