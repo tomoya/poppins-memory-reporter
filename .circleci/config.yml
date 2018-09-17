@@ -5,7 +5,7 @@ defaults: &defaults
 
 version: 2
 jobs:
-  test:
+  build:
     <<: *defaults
     steps:
       - checkout
@@ -21,6 +21,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+  test:
+    <<: *defaults
+    steps:
       - run:
           name: "JavaScript Linter"
           command: yarn lint --format junit -o reports/junit/js-lint-results.xml
@@ -66,7 +69,15 @@ workflows:
   version: 2
   test_and_deploy:
     jobs:
+      - build:
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /.*/
       - test:
+          requires:
+            - build
           filters:
             branches:
               only: /.*/
