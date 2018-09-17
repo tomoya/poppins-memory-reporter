@@ -24,6 +24,11 @@ jobs:
   test:
     <<: *defaults
     steps:
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+
       - run:
           name: "JavaScript Linter"
           command: yarn lint --format junit -o reports/junit/js-lint-results.xml
